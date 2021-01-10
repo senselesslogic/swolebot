@@ -14,6 +14,10 @@ In the root directory,
 
 ```docker container run --rm -it --env SWOLEBOT_DISCORDTOKEN=<discordtoken> discordclient```
 
+OR if you have an environment file
+
+```docker container run --rm -it --env-file src/discordclient/.env discordclient```
+
 #### Locally
 
 You'll need to setup the environment variables to connect to discord properly.
