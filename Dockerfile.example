@@ -1,0 +1,20 @@
+# Dockerfile example for building and running dotnet core applications
+# This example would be put in the project directory
+# The entrypoint needs to be changed to the project name to run properly
+# A .dockerignore needs to be used to remove obj/bin directories from the build context
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /source
+
+# copy csproj and restore as distinct layers
+COPY ./*.csproj .
+RUN dotnet restore
+
+# copy and publish app and libraries
+COPY . .
+RUN dotnet publish -c release -o /app --no-restore
+
+# final stage/image
+FROM mcr.microsoft.com/dotnet/runtime:5.0
+WORKDIR /app
+COPY --from=build /app .
+ENTRYPOINT ["./proj_name"]
