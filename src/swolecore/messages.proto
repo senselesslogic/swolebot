@@ -1,0 +1,15 @@
+syntax = "proto3";
+option csharp_namespace = "swolecore.messages";
+
+message User {
+    uint64 id = 1;
+    uint64 discord_id = 2;
+    string email = 3;
+}
+
+message Workout {
+    uint64 id = 1;
+    User user = 2;
+    int64 timestamp = 3;
+    string description = 4;
+}
