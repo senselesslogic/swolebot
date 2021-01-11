@@ -1,6 +1,4 @@
 syntax = "proto3";
-package tutorial;
-
 option csharp_namespace = "swolecore.messages";
 
 message User {
