@@ -7,12 +7,8 @@ namespace discordclient
 {
     class Program
     {
-        static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            MainAsync().GetAwaiter().GetResult();
-        }
-
-        static async Task MainAsync() {
             string discordToken = Environment.GetEnvironmentVariable("SWOLEBOT_DISCORDTOKEN");
             var discord = new DiscordClient(new DiscordConfiguration() {
                 Token = discordToken,
