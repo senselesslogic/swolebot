@@ -7,6 +7,9 @@
 
   <ItemGroup>
     <PackageReference Include="dsharpplus" Version="3.2.3" />
+    <PackageReference Include="microsoft.extensions.dependencyinjection" Version="5.0.1" />
+    <PackageReference Include="microsoft.extensions.logging" Version="5.0.0" />
+    <PackageReference Include="microsoft.extensions.logging.console" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>

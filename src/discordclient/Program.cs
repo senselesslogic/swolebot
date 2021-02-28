@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DSharpPlus;
 using swolecore.messages;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace discordclient
 {
@@ -9,35 +11,28 @@ namespace discordclient
     {
         public static async Task Main(string[] args)
         {
-            string discordToken = Environment.GetEnvironmentVariable("SWOLEBOT_DISCORDTOKEN");
-            var discord = new DiscordClient(new DiscordConfiguration() {
-                Token = discordToken,
-                TokenType = TokenType.Bot
+            var serviceProvider = setupDI();
+
+            var logger = serviceProvider.GetService<ILoggerFactory>().CreateLogger<Program>();
+            logger.LogDebug("Starting Application.");
+
+            var discordWrapper = serviceProvider.GetService<IDiscordWrapper>();
+            await discordWrapper.Start();
+
+            await Task.Delay(-1);
+        }
+
+        private static ServiceProvider setupDI() {
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection.AddLogging((builder) => {
+                builder.AddConsole();
+                builder.AddFilter("discordclient", LogLevel.Debug);
             });
 
-            discord.MessageCreated += async (e) => {
-                if (e.Message.Content.ToLower().StartsWith("!ping")) {
-                    await e.Message.RespondAsync("pong!");
-                } else if (e.Message.Content.ToLower().StartsWith("!register")) {
-                    Console.WriteLine("Received register command!");
-                    try {
-                        User user = new User() {
-                            DiscordId = e.Author.Id
-                        };
+            serviceCollection.AddSingleton<IDiscordWrapper, DiscordWrapper>();
 
-                        // Send message to register the user
-                        Console.WriteLine($"Sending user message... with email = {user.Email}; id = {user.DiscordId}");
-                    } catch (Exception ex) {
-                        Console.WriteLine($"An exception occurred.. {ex.Message}");
-                    }
-                    
-                    await e.Message.RespondAsync($"Registering user {e.Author.Username}");
-                    Console.WriteLine("Sent response!");
-                }
-            };
-
-            await discord.ConnectAsync();
-            await Task.Delay(-1);
+            return serviceCollection.BuildServiceProvider();
         }
     }
 }
