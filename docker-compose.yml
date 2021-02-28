@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  discordclient:
+    build:
+      context: .
+      dockerfile: Dockerfile.discord
+    env_file:
+      - discordclient.env

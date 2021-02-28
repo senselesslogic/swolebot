@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dsharpplus" Version="3.2.3" />
+    <PackageReference Include="microsoft.extensions.dependencyinjection" Version="5.0.1" />
+    <PackageReference Include="microsoft.extensions.logging" Version="5.0.0" />
+    <PackageReference Include="microsoft.extensions.logging.console" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\swolecore\swolecore.csproj" />
+  </ItemGroup>
+
+</Project>
